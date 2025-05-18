@@ -1,0 +1,21 @@
+{% extends 'basetemplate.html' %}
+{% load static %}
+{% block content %}
+<body>
+    <h2>Opprett bruker</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="">Fornavn</label>
+        <input type="text" name="first_name">
+        <label for="">Etternavn</label>
+        <input type="text" name="last_name">
+        <label for="">E-post</label>
+        <input type="text" name="email">
+        <label for="">Passord</label>
+        <input type="password" name="password">
+        <label for="">Gjenta passord</label>
+        <input type="password" name="password_confirmation">
+        <button type="submit">Opprett bruker</button>
+    </form>
+</body>
+{% endblock %}

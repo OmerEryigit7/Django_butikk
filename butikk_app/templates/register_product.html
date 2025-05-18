@@ -1,0 +1,12 @@
+{% extends 'basetemplate.html' %}
+{% load static %}
+{% block content %}
+<body>
+    <h2>Register Product</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+</body>
+{% endblock %}

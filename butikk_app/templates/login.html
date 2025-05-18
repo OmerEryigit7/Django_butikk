@@ -1,0 +1,16 @@
+{% extends 'basetemplate.html' %}
+{% load static %}
+{% block content %}
+<body>
+    <h2>Logg inn</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label for="">E-post</label>
+        <input type="text" name="email">
+        <label for="">Passord</label>
+        <input type="password" name="password">
+        <button type="submit">Logg inn</button>
+    </form>
+</body>
+{% endblock %}
