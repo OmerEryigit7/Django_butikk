@@ -9,7 +9,7 @@ class ProductInfo(models.Model):
     price = models.IntegerField()
     description = models.CharField(max_length=200, default='', blank=True, null=True)
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='butikk_app/static/images')
+    image = models.ImageField(upload_to='butikk_app/images')
 
     def if_duplicate(self):
         if ProductInfo.objects.filter(name=self.name).exclude(pk=self.pk).exists():

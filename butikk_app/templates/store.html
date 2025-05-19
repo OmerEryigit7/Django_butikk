@@ -32,5 +32,19 @@
         <p>Sort t-skjorte</p>
         <h6>499</h6>
     </div>
+    {% if products %}
+        {% for product in products %}
+            <div class="product-container">
+                    <img src="{{ product.image.url }}" alt="">
+                    <hr>
+                    <strong>{{ product.name }}</strong><br>
+                    {{ product.description }}<br>
+                    Pris: {{ product.price }}<br>
+            </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products available.</p>
+    {% endif %}
 </div>
 {% endblock %}

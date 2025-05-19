@@ -2,7 +2,11 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <div id="navbar">
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.is_admin %}
+        <a href="">logg ut</a>
+        <a href="{% url 'register_product_url' %}">registrer varer</a>
+        <a href="">handlekurv</a>
+    {% elif user.is_authenticated %}
         <a href="">logg ut</a>
         <a href="">handlekurv</a>
     {% else %}

@@ -4,9 +4,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
 from .forms import ProductForm
+from .models import ProductInfo
 
 def store(request):
-     return render(request, 'store.html')
+    products = ProductInfo.objects.all()
+    return render(request, 'store.html', {'products': products})
 
 def register_product(request):
     if request.method == 'POST':
@@ -56,4 +58,3 @@ def register_user(request):
         return redirect('store')
     else:
         return render(request, 'register_user.html')
-

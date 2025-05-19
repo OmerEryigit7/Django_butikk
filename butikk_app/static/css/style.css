@@ -3,8 +3,9 @@
     padding: 0;
 }
 
-#a {
-    background-color: aliceblue;
+#navbar a{
+    padding-left: 5vw;
+    text-decoration: none;
 }
 
 .product-container img{
