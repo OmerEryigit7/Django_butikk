@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -19,6 +19,10 @@ def register_product(request):
     else:
         form = ProductForm()
     return render(request, 'register_product.html', {'form': form})
+
+def get_product_info(request, pk):
+    product = get_object_or_404(ProductInfo, pk=pk)
+    return render(request, 'product_page.html', {'product': product})
 
 
 def login_user(request):
@@ -58,3 +62,18 @@ def register_user(request):
         return redirect('store')
     else:
         return render(request, 'register_user.html')
+    
+def add_to_cart(request, pk): 
+    if request.method == 'POST':
+        
+        product = get_object_or_404(ProductInfo, pk=pk)
+
+        cart = request.session.get('cart', {})
+
+        if str(pk) in cart:
+            cart[str(pk)] += 1
+        else:
+            cart[str(pk)] = 1
+
+        
+        return render(request, 'product_page.html')

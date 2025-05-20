@@ -2,49 +2,18 @@
 {% load static %}
 {% block content %}
 <div id="products-list">
-    <div class="product-container">
-        <img class="image" src="{% static 'images/t-skjorte.jpg' %}">
-        <hr>
-        <p>Sort t-skjorte</p>
-        <h6>499</h6>
-    </div>
-    <div class="product-container">
-        <img class="image" src="{% static 'images/t-skjorte.jpg' %}">
-        <hr>
-        <p>Sort t-skjorte</p>
-        <h6>499</h6>
-    </div>
-    <div class="product-container">
-        <img class="image" src="{% static 'images/t-skjorte.jpg' %}">
-        <hr>
-        <p>Sort t-skjorte</p>
-        <h6>499</h6>
-    </div>
-    <div class="product-container">
-        <img class="image" src="{% static 'images/t-skjorte.jpg' %}">
-        <hr>
-        <p>Sort t-skjorte</p>
-        <h6>499</h6>
-    </div>
-    <div class="product-container">
-        <img class="image" src="{% static 'images/t-skjorte.jpg' %}">
-        <hr>
-        <p>Sort t-skjorte</p>
-        <h6>499</h6>
-    </div>
     {% if products %}
         {% for product in products %}
             <div class="product-container">
+                <a href="{% url 'get_product_info' pk=product.pk %}">
                     <img src="{{ product.image.url }}" alt="">
-                    <hr>
-                    <strong>{{ product.name }}</strong><br>
-                    {{ product.description }}<br>
-                    Pris: {{ product.price }}<br>
+                    <strong><p>{{ product.name }}</p></strong><br>
+                    <p>{{ product.price }} kr.</p><br>
+                </a>
             </div>
-            {% endfor %}
-        </ul>
+        {% endfor %}
     {% else %}
-        <p>No products available.</p>
+        <p>Ingen produkter er tilgjengelige</p>
     {% endif %}
 </div>
 {% endblock %}
