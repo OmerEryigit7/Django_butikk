@@ -2,11 +2,11 @@
 {% load static %}
 {% block content %}
 <body>
-    <h2>Register Product</h2>
+    <h2>Registrer produkt</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <button type="submit">Lagre</button>
     </form>
 </body>
 {% endblock %}

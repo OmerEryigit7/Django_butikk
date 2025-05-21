@@ -69,11 +69,38 @@ def add_to_cart(request, pk):
         product = get_object_or_404(ProductInfo, pk=pk)
 
         cart = request.session.get('cart', {})
+        print(cart)
 
         if str(pk) in cart:
             cart[str(pk)] += 1
         else:
             cart[str(pk)] = 1
+        
+        request.session['cart'] = cart
 
         
-        return render(request, 'product_page.html')
+        return render(request, 'product_page.html', {'product': product})
+
+def get_cart(request):
+    cart = request.session.get('cart', {})
+    print(cart)
+
+    if not cart or cart =={}:
+        messages.error(request, 'Handlekurven er tom')
+        return render(request, 'cart.html')
+   
+    else:
+        products = []
+
+        for product_pk, quantity in cart.items():
+            product = get_object_or_404(ProductInfo, pk=product_pk)
+            price_of_quantity = product.price * quantity
+
+            products.append({
+                'product_info': product,
+                'quantity': quantity,
+                'price_of_quantity': price_of_quantity
+            })
+
+            print(products)
+        return render(request, 'cart.html', {'products': products})

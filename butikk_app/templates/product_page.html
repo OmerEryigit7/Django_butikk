@@ -7,12 +7,13 @@
                 <img src="{{ product.image.url }}" alt="">
                 <strong><p>{{ product.name }}</p></strong><br>
                 <p>{{ product.description }}</p><br>
-                <p>{{ product.price }} kr.</p><br>
+                <p>{{ product.price }},-</p><br>
             </a>
         </div>
         <div>
-            <form action="submit">
-                
+            <form method="post" action="{% url 'add_to_cart' pk=product.pk %}">
+                {% csrf_token %}
+                <button>Legg i handlekurven</button>
             </form>
         </div>
 </div>
