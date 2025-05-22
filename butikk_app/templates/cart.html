@@ -1,15 +1,30 @@
 {% extends 'basetemplate.html' %}
 {% load static %}
 {% block content %}
-<div id="products-list">
-        {% for product in products %}
-                <div class="product-container">
-                        <img src="{{ product.product_info.image.url }}" alt="">
-                        <strong><p>{{ product.name }}</p></strong><br>
-                        <p>{{ product.product_info.description }}</p><br>
-                        <p>{{ product.price_of_quantity }},-</p><br>
-                        <p>Antall {{ product.quantity }}</p>
-                </div>
-        {% endfor %}
-</div>
+
+{% if products %}
+	<div id="products-list">
+		{% for product in products %}
+			<div class="product-container">
+				<img src="{{ product.product_info.image.url }}" alt="">
+				<strong><p>{{ product.name }}</p></strong><br>
+				<p>{{ product.product_info.description }}</p><br>
+				<p>{{ product.price_of_quantity }},-</p><br>
+				<p>Antall {{ product.quantity }}</p>
+			</div>
+		{% endfor %}
+	</div>
+	<div>
+	<hr>
+	<div id="order-price-text-container">
+		<p>Ordre total</p>
+		<p>{{ total_price }}</p>
+	</div>
+	<div id="center-content-horizontally">
+		<button id="click-and-collect-button">Klikk og hent</button>
+		<button id="click-and-collect-button">Hjemmelevering</button>
+	</div>
+{% else %}
+<p>Handlekurven er tomt.</p>
+{% endif %}
 {% endblock %}

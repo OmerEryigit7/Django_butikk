@@ -2,17 +2,22 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <div id="navbar">
-    {% if user.is_authenticated and user.is_admin %}
-        <a href="">logg ut</a>
-        <a href="{% url 'register_product_url' %}">registrer varer</a>
-        <a href="">handlekurv</a>
+    <a href="{% url 'store' %}"><h1>Ømershop</h1></a>
+    {% if user.is_authenticated %}
+        {% for group in request.user.groups.all %}
+            {% if group.name == "Ansatt" %}
+                <a href="{% url 'logout_url' %}">logg ut</a>
+                <a href="{% url 'register_product_url' %}">registrer varer</a>
+                <a href="{% url 'get_cart' %}"><img class="cart_image" src="{% static 'images/Shopping-Basket-Icon.png' %}" alt="handlekurv"></a>
+            {% endif %}
+        {% endfor %}
     {% elif user.is_authenticated %}
-        <a href="">logg ut</a>
-        <a href="">handlekurv</a>
+        <a href="{% url 'logout_url' %}">logg ut</a>
+        <a href="{% url 'get_cart' %}"><img class="cart_image" src="{% static 'images/Shopping-Basket-Icon.png' %}" alt="handlekurv"></a>
     {% else %}
         <a href="{% url 'create_user_url' %}">opprett bruker</a>
         <a href="{% url 'login_url' %}">Logg inn</a>
-        <a href="">handlekurv</a>
+        <a href="{% url 'get_cart' %}"><img class="cart_image" src="{% static 'images/Shopping-Basket-Icon.png' %}" alt="handlekurv"></a>
     {% endif %}
 </div>
 

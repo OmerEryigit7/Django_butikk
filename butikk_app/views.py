@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 from .forms import ProductForm
@@ -11,14 +11,17 @@ def store(request):
     return render(request, 'store.html', {'products': products})
 
 def register_product(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('store')
+    if request.user.groups.filter(name='Ansatt').exists():
+        if request.method == 'POST':
+            form = ProductForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('store')
+        else:
+            form = ProductForm()
+        return render(request, 'register_product.html', {'form': form})
     else:
-        form = ProductForm()
-    return render(request, 'register_product.html', {'form': form})
+        return redirect('store')
 
 def get_product_info(request, pk):
     product = get_object_or_404(ProductInfo, pk=pk)
@@ -37,6 +40,12 @@ def login_user(request):
         else:
             messages.error(request, 'Feil brukernavn eller passord.')
     return render(request, 'login.html')
+
+def logout_user(request):
+    cart = request.session.get('cart', {})
+    del cart
+    logout(request)
+    return redirect('home')
 
 def register_user(request):
     if request.method == 'POST':
@@ -91,16 +100,18 @@ def get_cart(request):
    
     else:
         products = []
+        total_price = 0
 
         for product_pk, quantity in cart.items():
             product = get_object_or_404(ProductInfo, pk=product_pk)
             price_of_quantity = product.price * quantity
+            total_price += price_of_quantity
 
             products.append({
                 'product_info': product,
                 'quantity': quantity,
-                'price_of_quantity': price_of_quantity
+                'price_of_quantity': price_of_quantity,
             })
 
             print(products)
-        return render(request, 'cart.html', {'products': products})
+        return render(request, 'cart.html', {'products': products, 'total_price': total_price})
